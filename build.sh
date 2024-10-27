@@ -1,1 +1,1 @@
-odin build main.odin -file -target:js_wasm32
+odin build . -target:js_wasm32
