@@ -6,8 +6,12 @@
     <script src="runtime.js" defer></script>
   </head>
   <body>
-    <canvas id="canvas" width="800" height="600"></canvas>
+    <canvas id="canvas" style="aspect-ratio: 800/600"></canvas>
     <script>
+      var canvas = document.getElementById("canvas");
+      canvas.width = window.innerWidth - 15;
+      canvas.height = window.innerHeight - 15;
+
       console.log("JS: Starting...");
       window.onload = async function () {
         console.log("JS: Window loaded");
