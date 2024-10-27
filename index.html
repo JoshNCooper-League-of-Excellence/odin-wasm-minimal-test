@@ -25,7 +25,7 @@
         const consoleElement = document.getElementById("console");
         try {
           console.log("JS: About to run WASM");
-          await odin.runWasm("./odin-wasm-test.wasm", consoleElement);
+          await odin.runWasm("./odin-wasm-minimal-test.wasm", consoleElement);
           console.log("JS: WASM running");
         } catch (err) {
           console.error("WASM error:", err);
