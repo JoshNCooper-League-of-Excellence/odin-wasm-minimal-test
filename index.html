@@ -6,11 +6,18 @@
     <script src="runtime.js" defer></script>
   </head>
   <body>
-    <canvas id="canvas" style="aspect-ratio: 800/600"></canvas>
+    <canvas id="canvas" style="display: block; margin: 0 auto"></canvas>
     <script>
       var canvas = document.getElementById("canvas");
-      canvas.width = window.innerWidth - 15;
-      canvas.height = window.innerHeight - 15;
+      var targetAspectRatio = 800 / 600;
+      var windowAspectRatio = window.innerWidth / window.innerHeight;
+      if (windowAspectRatio > targetAspectRatio) {
+        canvas.height = window.innerHeight - 15;
+        canvas.width = (window.innerHeight - 15) * targetAspectRatio;
+      } else {
+        canvas.width = window.innerWidth - 15;
+        canvas.height = (window.innerWidth - 15) / targetAspectRatio;
+      }
 
       console.log("JS: Starting...");
       window.onload = async function () {

@@ -13,7 +13,7 @@ vertex_source := `
 
 fragment_source := `
   void main() {
-    gl_FragColor = vec4(0.5, 0.5, 0.0, 1.0);
+    gl_FragColor = vec4(0.75, 0.75, 0.75, 1.0);
   }
 `
 
@@ -74,9 +74,15 @@ vertices: [36]glm.vec3 = {
 CONTEXT_ID :: "canvas"
 @(export)
 init :: proc() {
+
+	// attach our gl context to the html surface.
 	_ = gl.CreateCurrentContextById(CONTEXT_ID, {})
 	_ = gl.SetCurrentContextById(CONTEXT_ID)
 
+	// set the background clear color.
+	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
+
+	// compile shaders
 	vertex_shader := gl.CreateShader(gl.VERTEX_SHADER)
 	gl.ShaderSource(vertex_shader, {vertex_source})
 	gl.CompileShader(vertex_shader)
@@ -91,6 +97,7 @@ init :: proc() {
 	gl.LinkProgram(shader_program)
 	gl.UseProgram(shader_program)
 
+	// setup our vertex array & buffer.
 	vao := gl.CreateVertexArray()
 	gl.BindVertexArray(vao)
 
@@ -102,13 +109,14 @@ init :: proc() {
 	gl.VertexAttribPointer(0, 3, gl.FLOAT, false, size_of(glm.vec3), 0)
 
 	gl.Enable(gl.DEPTH_TEST)
-	gl.ClearColor(0.0, 0.0, 1.0, 1.0)
 
+	// A debug print.
 	fmt.println("ODIN: Init called!")
 }
 
 @(export)
 step :: proc(delta_time: f64) -> bool {
+	// clear the screen and draw the cube.
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.DrawArrays(gl.TRIANGLES, 0, 36)
 	return true
