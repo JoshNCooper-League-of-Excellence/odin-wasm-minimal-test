@@ -1933,6 +1933,30 @@ async function runWasm(wasmPath, consoleElement, extraForeignImports, wasmMemory
 	exports = wasm.instance.exports;
 	wasmMemoryInterface.setExports(exports);
 
+  window.addEventListener("keydown", function (event) {
+    const keyCode = event.keyCode;
+    wasm.instance.exports.on_key_down(keyCode);
+  });
+
+  window.addEventListener("keyup", function (event) {
+    const keyCode = event.keyCode;
+    wasm.instance.exports.on_key_up(keyCode);
+  });
+
+  window.addEventListener("mousedown", function (event) {
+    wasm.instance.exports.on_mouse_down(event.button);
+  });
+
+  window.addEventListener("mouseup", function (event) {
+    wasm.instance.exports.on_mouse_up(event.button);
+  });
+
+  window.addEventListener("mousemove", function (event) {
+    const x = event.clientX;
+    const y = event.clientY;
+    wasm.instance.exports.on_mouse_move(x, y);
+  });
+
 	if (exports.memory) {
 		if (wasmMemoryInterface.memory) {
 			console.warn("WASM module exports memory, but `runWasm` was given an interface with existing memory too");
